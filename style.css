@@ -1,80 +1,270 @@
 :root {
-  --bg: #0b3d91;
-  --surface: #1e5cb3;
-  --surface-light: #2a66bf;
-  --text: #ffffff;
-  --accent: #ffce45;
+  --bg-1: #071f56;
+  --bg-2: #153e9c;
+  --card: rgba(255, 255, 255, 0.11);
+  --card-border: rgba(255, 255, 255, 0.2);
+  --text: #f4f7ff;
+  --muted: #d3defb;
+  --accent: #ffd45e;
+  --accent-dark: #e8bd42;
+  --chat-user: #2f74dd;
+  --chat-ai: rgba(255, 255, 255, 0.16);
 }
  {
   box-sizing: border-box;
 }
 body {
-  background: linear-gradient(180deg, #0b3d91 0%, #0a3175 100%);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  margin: 0;
+   margin: 0;
   min-height: 100vh;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 15% 20%, #235bc7 0%, var(--bg-2) 34%, var(--bg-1) 100%);
 }
-.container {
-    width: min(680px, 92vw);
-  margin: 32px auto;
-  background: rgba(0, 0, 0, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+.app-shell {
+  width: min(840px, 92vw);
+  margin: 28px auto 40px;
+}
+.hero {
+  margin-bottom: 18px;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.1;
+}
+.subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
   padding: 18px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+  margin-bottom: 16px;
 }
-label {
-  display: block;
-  margin: 8px 0 4px;
-  font-weight: 600;
+.card-head {
+  display: flex;
+   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.card h2 {
+  margin: 0;
+  font-size: 26px;
+}
+.mode-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
 }
 #mode,
 input,
 button {
-  border: 0;
-  border-radius: 8px;
-  padding: 10px;
-    font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  padding: 11px 12px;
+  font-size: 16px;
 }
 #mode,
 input {
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-button {
-  background: var(--accent);
-  color: #1d2330;
-  font-weight: 700;
-  cursor: pointer;
-  margin-bottom: 8px;
-}
-button:hover {
-  filter: brightness(0.95);
+  background: #eef3ff;
+  color: #1b2a4d;
 }
 #chatBox {
-  height: 280px;
-  background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  height: 290px;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  margin-bottom: 12px;
+}
+chat {
   border-radius: 10px;
+  margin: 8px 0;
+  padding: 10px;
+  :root {
+  --bg-1: #071f56;
+  --bg-2: #153e9c;
+  --card: rgba(255, 255, 255, 0.11);
+  --card-border: rgba(255, 255, 255, 0.2);
+  --text: #f4f7ff;
+  --muted: #d3defb;
+  --accent: #ffd45e;
+  --accent-dark: #e8bd42;
+  --chat-user: #2f74dd;
+  --chat-ai: rgba(255, 255, 255, 0.16);
+}
+ {
+  box-sizing: border-box;
+}
+body {
+  background: #0b3d91;
+  color: white;
+  font-family: Arial;
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 15% 20%, #235bc7 0%, var(--bg-2) 34%, var(--bg-1) 100%);
+}
+.app-shell {
+  width: min(840px, 92vw);
+  margin: 28px auto 40px;
+}
+.hero {
+  margin-bottom: 18px;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.1;
+}
+.subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 18px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+  margin-bottom: 16px;
+}
+.card-head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.container {
+  width: 400px;
+  margin-top: 50px;
+.card h2 {
+  margin: 0;
+  font-size: 26px;
+}
+.mode-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+#mode,
+input,
+button {
+  border-radius: 10px;
+  border: 1px solid transparent;
+  padding: 11px 12px;
+  font-size: 16px;
+}
+#mode,
+input {
+  background: #eef3ff;
+  color: #1b2a4d;
+}
+#chatBox {
+  height: 250px;
+  background: #1e5cb3;
   padding: 10px;
   margin: 10px 0;
+  height: 290px;
   overflow-y: auto;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  margin-bottom: 12px;
 }
+input {
+  width: 70%;
 .chat {
-  padding: 8px;
-  border-radius: 8px;
-  margin: 6px 0;
+  border-radius: 10px;
+  margin: 8px 0;
+  padding: 10px;
+  margin: 5px 0;
+  line-height: 1.35;
 }
 .chat-user {
-  background: var(--surface-light);
+  background: var(--chat-user);
 }
 .chat-ai {
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--chat-ai);
 }
-#ppfResult {
-  margin-top: 10px;
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.chip {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 14px;
+}
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+button {
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+button:hover {
+  transform: translateY(-1px);
+}
+.primary {
+  background: var(--accent);
+  color: #1c2233;
+  font-weight: 800;
+}
+.primary:hover {
+  background: var(--accent-dark);
+}
+.muted {
+  margin: 8px 0 12px;
+  color: var(--muted);
+}
+.grid {
+  display: grid;
+  gap: 10px;
+}
+.inline-input {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+.result {
+  margin-top: 12px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  min-height: 44px;
   font-weight: 700;
+}
+@media (max-width: 640px) {
+  .card-head,
+  .input-row,
+  .inline-input {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+  .mode-label {
+    justify-content: space-between;
+  }
 }
