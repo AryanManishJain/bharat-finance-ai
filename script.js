@@ -1,32 +1,59 @@
 const chatBox = document.getElementById('chatBox');
-function append(msg) {
+const input = document.getElementById('input');
+function append(sender, message) {
   const div = document.createElement('div');
-  div.innerText = msg;
+   div.className = sender === 'You' ? 'chat chat-user' : 'chat chat-ai';
+  div.innerText = `${sender}: ${message}`;
   chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 async function sendMsg() {
-  const input = document.getElementById('input');
-  const message = input.value;
+  const message = input.value.trim();
   const mode = document.getElementById('mode').value;
-  append('You: ' + message);
-  const res = await fetch('/api/chat', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ message, mode })
-  });
-  const data = await res.json();
-  append('AI: ' + data.reply);
+   if (!message) {
+    append('AI', 'Please type a message first.');
+    return;
+  }
 
+  append('You', message);
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message, mode })
+    });
+    const data = await res.json();
+    append('AI', data.reply);
+  } catch (error) {
+    append('AI', 'Something went wrong while contacting the server. Please try again.');
+  }
   input.value = '';
+  input.focus();
 }
+input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    sendMsg();
+  }
+});
 // --- PPF Calculator ---
 function calcPPF() {
-  const P = parseFloat(document.getElementById('amount').value);
-  const i = parseFloat(document.getElementById('rate').value) / 100;
-  const n = parseInt(document.getElementById('years').value);
-  const result = P * (((Math.pow(1 + i, n) - 1) / i) * (1 + i));
-  document.getElementById('ppfResult').innerText =
-    "Maturity Amount: ₹" + result.toFixed(2);
+  const principal = Number.parseFloat(document.getElementById('amount').value);
+  const rate = Number.parseFloat(document.getElementById('rate').value) / 100;
+  const years = Number.parseInt(document.getElementById('years').value, 10);
+  const resultNode = document.getElementById('ppfResult');
+
+  const invalid = !Number.isFinite(principal)
+    || !Number.isFinite(rate)
+    || !Number.isInteger(years)
+    || principal <= 0
+    || rate <= 0
+    || years <= 0;
+  if (invalid) {
+    resultNode.innerText = 'Please enter valid positive values for amount, rate, and years.';
+    return;
+  }
+  const maturityAmount = principal * (((Math.pow(1 + rate, years) - 1) / rate) * (1 + rate));
+  resultNode.innerText = `Maturity Amount: ₹${maturityAmount.toFixed(2)}`;
 }
