@@ -1,42 +1,51 @@
 const chatBox = document.getElementById('chatBox');
 const input = document.getElementById('input');
+
 function append(sender, message) {
   const div = document.createElement('div');
-   div.className = sender === 'You' ? 'chat chat-user' : 'chat chat-ai';
+  div.className = sender === 'You' ? 'chat chat-user' : 'chat chat-ai';
   div.innerText = `${sender}: ${message}`;
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
+
 async function sendMsg() {
   const message = input.value.trim();
   const mode = document.getElementById('mode').value;
-   if (!message) {
+
+  if (!message) {
     append('AI', 'Please type a message first.');
     return;
   }
 
   append('You', message);
+
   try {
-    const res = await fetch('/api/chat', {
+    // FIX: Use the full URL to reach your local server
+    const res = await fetch('http://localhost:3000/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ message, mode })
     });
+
     const data = await res.json();
     append('AI', data.reply);
   } catch (error) {
-    append('AI', 'PPF is a great low-risk option. You can invest up to ₹1.5 lakh per year to maximize tax benefits under Section 80C');
+    append('AI', 'Something went wrong while contacting the server. Please try again.');
   }
+
   input.value = '';
   input.focus();
 }
+
 input.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
     sendMsg();
   }
 });
+
 // --- PPF Calculator ---
 function calcPPF() {
   const principal = Number.parseFloat(document.getElementById('amount').value);
@@ -50,6 +59,7 @@ function calcPPF() {
     || principal <= 0
     || rate <= 0
     || years <= 0;
+
   if (invalid) {
     resultNode.innerText = 'Please enter valid positive values for amount, rate, and years.';
     return;
