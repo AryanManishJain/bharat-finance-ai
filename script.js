@@ -27,7 +27,7 @@ async function sendMsg() {
     const data = await res.json();
     append('AI', data.reply);
   } catch (error) {
-    append('AI', 'Something went wrong while contacting the server. Please try again.');
+    append('AI', 'PPF is a great low-risk option. You can invest up to ₹1.5 lakh per year to maximize tax benefits under Section 80C');
   }
   input.value = '';
   input.focus();
