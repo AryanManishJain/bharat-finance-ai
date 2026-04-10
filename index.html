@@ -1,35 +1,30 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bharat Finance AI</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="container">
   <h1>Bharat Finance AI</h1>
-  <label for="mode">Mode</label>
-  <select id="mode" aria-label="Chat mode">
+
+  <select id="mode">
     <option>Investing</option>
     <option>Tax</option>
     <option>Startup</option>
   </select>
-    <div id="chatBox" aria-live="polite"></div>
 
-  <label for="input">Ask your question</label>
-  <input id="input" placeholder="Ask something..." autocomplete="off">
-  <button onclick="sendMsg()">Send</button>
-  
-  <h3>PPF Calculator</h3>
-  <input id="amount" placeholder="Annual investment amount" inputmode="decimal">
-  <input id="rate" placeholder="Interest rate (%)" inputmode="decimal">
-  <input id="years" placeholder="Years" inputmode="numeric">
-  <button onclick="calcPPF()">Calculate</button>
-  <div id="ppfResult"></div>
+  <div id="chatBox"></div>
+
+  <form id="chat-form">
+    <input id="input" placeholder="Ask something..." autocomplete="off">
+    <button type="submit">Send</button>
+  </form>
+
 </div>
+
 <script src="script.js"></script>
 </body>
 </html>
