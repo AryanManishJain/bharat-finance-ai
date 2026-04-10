@@ -36,7 +36,7 @@ window.onload = function () {
     });
 };
 
-// ✅ PPF CALCULATOR
+//  PPF CALCULATOR
 function calcPPF() {
     const P = parseFloat(document.getElementById('amount').value);
     const r = parseFloat(document.getElementById('rate').value) / 100;
