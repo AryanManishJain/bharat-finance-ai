@@ -1,56 +1,39 @@
-window.onload = function () {
-    const form = document.getElementById('chat-form');
-    const chatBox = document.getElementById('chatBox');
-    const input = document.getElementById('input');
-    const mode = document.getElementById('mode');
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const mode = document.getElementById("mode").value;
+  const message = input.value.toLowerCase();
 
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
+  let reply = "";
 
-        const text = input.value.trim();
-        if (!text) return;
+  // BLOCKED
+  if (message.includes("double money")) {
+    reply = "Your message was blocked due to safety policy.";
+  }
 
-        // Show user message
-        chatBox.innerHTML += `<div class="user">You: ${text}</div>`;
-        input.value = "";
-
-        try {
-            const res = await fetch('/api/chat', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    message: text,
-                    mode: mode.value
-                })
-            });
-
-            const data = await res.json();
-
-            // Show AI reply
-            chatBox.innerHTML += `<div class="ai">AI: ${data.reply}</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-        } catch (err) {
-            chatBox.innerHTML += `<div class="ai">Error connecting to server</div>`;
-        }
-    });
-};
-
-//  PPF CALCULATOR
-function calcPPF() {
-    const P = parseFloat(document.getElementById('amount').value);
-    const r = parseFloat(document.getElementById('rate').value) / 100;
-    const n = parseFloat(document.getElementById('years').value);
-
-    if (!P || !r || !n) {
-        document.getElementById('ppfResult').innerText = "Please fill all fields correctly.";
-        return;
+  // INVESTING
+  else if (mode === "Investing") {
+    if (message.includes("ppf")) {
+      reply = "PPF offers stable, government-backed returns with tax benefits.";
+    } else if (message.includes("sip")) {
+      reply = "SIP helps build disciplined investing habits through regular contributions.";
+    } else {
+      reply = "Please ask a specific finance question (PPF, SIP, etc.).";
     }
+  }
 
-    const maturity = P * ((Math.pow(1 + r, n) - 1) / r);
-    const invested = P * n;
-    const interest = maturity - invested;
+  // TAX
+  else if (mode === "Tax") {
+    if (message.includes("80c")) {
+      reply = "Section 80C currently allows deductions up to ₹1.5 lakh under the old regime.";
+    } else if (message.includes("itr")) {
+      reply = "ITR is generally filed once each financial year based on your income type.";
+    } else {
+      reply = "Please ask a specific tax question.";
+    }
+  }
 
-    document.getElementById('ppfResult').innerText =
-        `Maturity: ₹${maturity.toFixed(2)} | Invested: ₹${invested} | Interest: ₹${interest.toFixed(2)}`;
+  addMessage("You: " + input.value, "chat-user");
+  addMessage("AI: " + reply, "chat-ai");
+
+  input.value = "";
 }
