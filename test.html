@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Working Chat</title>
+</head>
+<body style="background:#0b3d91;color:white;font-family:Arial;">
+
+<div style="width:400px;margin:50px auto;">
+
+  <select id="mode">
+    <option>Investing</option>
+    <option>Tax</option>
+  </select>
+
+  <div id="chatBox" style="height:250px;background:#1e5cb3;padding:10px;overflow-y:auto;margin:10px 0;"></div>
+
+  <input id="userInput" placeholder="Type message">
+  <button onclick="sendMessage()">Send</button>
+
+</div>
+
+<script>
+function sendMessage() {
+  var input = document.getElementById("userInput");
+  var chatBox = document.getElementById("chatBox");
+  var mode = document.getElementById("mode").value;
+
+  var msg = input.value.trim().toLowerCase();
+  if (!msg) return;
+
+  chatBox.innerHTML += "<div>You: " + input.value + "</div>";
+
+  var reply = "";
+
+  if (msg.indexOf("double money") !== -1) {
+    reply = "Your message was blocked due to safety policy.";
+  }
+  else if (mode === "Investing" && msg === "explain ppf") {
+    reply = "PPF offers stable, government-backed returns with tax benefits.";
+  }
+  else if (mode === "Investing" && (msg === "what is sip?" || msg === "what is sip")) {
+    reply = "SIP helps build disciplined investing habits through regular contributions.";
+  }
+  else if (mode === "Tax" && (msg === "what is 80c?" || msg === "what is 80c")) {
+    reply = "Section 80C currently allows deductions up to ₹1.5 lakh under the old regime.";
+  }
+  else if (mode === "Tax" && (msg === "what is itr?" || msg === "what is itr")) {
+    reply = "ITR is generally filed once each financial year based on your income type.";
+  }
+  else {
+    reply = "Please ask a specific finance question (PPF, SIP, ITR, 80C, etc.).";
+  }
+
+  chatBox.innerHTML += "<div>AI: " + reply + "</div>";
+
+  input.value = "";
+}
+</script>
+
+</body>
+</html>
