@@ -7,34 +7,59 @@
 </head>
 <body>
 
-<div class="container">
-  <h1>Bharat Finance AI</h1>
+<div style="width:400px;margin:50px auto;font-family:Arial;color:white;background:#0b3d91;padding:20px">
 
   <select id="mode">
     <option>Investing</option>
     <option>Tax</option>
-    <option>Startup</option>
   </select>
 
-  <div id="chatBox"></div>
+  <div id="chatBox" style="height:250px;background:#1e5cb3;padding:10px;overflow-y:auto;margin:10px 0;"></div>
 
-  <form id="chat-form">
-    <input id="input" placeholder="Ask something..." autocomplete="off">
-    <button type="submit">Send</button>
-  </form>
+  <input id="userInput" placeholder="Type message" style="width:70%;padding:10px;">
+  <button onclick="sendMessage()" style="padding:10px;">Send</button>
 
-  <!-- PPF CALCULATOR -->
-  <h3>PPF Calculator</h3>
-
-  <input id="amount" placeholder="Annual Investment (₹)">
-  <input id="rate" placeholder="Interest Rate (%)">
-  <input id="years" placeholder="Years">
-
-  <button onclick="calcPPF()">Calculate</button>
-
-  <div id="ppfResult"></div>
 </div>
 
-<script src="script.js"></script>
+<script>
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const chatBox = document.getElementById("chatBox");
+  const mode = document.getElementById("mode").value;
+
+  const message = input.value.trim().toLowerCase();
+  if (!message) return;
+
+  // USER
+  chatBox.innerHTML += "<div>You: " + input.value + "</div>";
+
+  let reply = "";
+
+  if (message.includes("double money")) {
+    reply = "Your message was blocked due to safety policy.";
+  }
+  else if (mode === "Investing" && message === "explain ppf") {
+    reply = "PPF offers stable, government-backed returns with tax benefits.";
+  }
+  else if (mode === "Investing" && (message === "what is sip?" || message === "what is sip")) {
+    reply = "SIP helps build disciplined investing habits through regular contributions.";
+  }
+  else if (mode === "Tax" && (message === "what is 80c?" || message === "what is 80c")) {
+    reply = "Section 80C currently allows deductions up to ₹1.5 lakh under the old regime.";
+  }
+  else if (mode === "Tax" && (message === "what is itr?" || message === "what is itr")) {
+    reply = "ITR is generally filed once each financial year based on your income type.";
+  }
+  else {
+    reply = "Please ask a specific finance question (PPF, SIP, ITR, 80C, etc.).";
+  }
+
+  // AI
+  chatBox.innerHTML += "<div>AI: " + reply + "</div>";
+
+  input.value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
 </body>
 </html>
