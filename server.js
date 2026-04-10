@@ -1,7 +1,23 @@
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static(__dirname));
+
+const blockedKeywords = ['ponzi', 'mlm', 'double money', 'get rich quick'];
+
+function isBlocked(input = '') {
+  return blockedKeywords.some((keyword) => input.toLowerCase().includes(keyword));
+}
+
 function generateResponse(message = '', mode = '') {
   const msg = message.toLowerCase().trim();
-  // 🔒 EXACT MATCH LOGIC (no random replies)
-  // INVESTING MODE
+
+  // INVESTING
   if (mode === 'Investing') {
     if (msg === 'explain ppf' || msg.includes('ppf')) {
       return 'PPF offers stable, government-backed returns with tax benefits.';
@@ -13,7 +29,8 @@ function generateResponse(message = '', mode = '') {
       return 'SIP helps build disciplined investing habits through regular contributions.';
     }
   }
-  // TAX MODE
+
+  // TAX
   if (mode === 'Tax') {
     if (msg === 'what is 80c' || msg.includes('80c')) {
       return 'Section 80C currently allows deductions up to ₹1.5 lakh under the old regime.';
@@ -25,7 +42,8 @@ function generateResponse(message = '', mode = '') {
       return 'GST return frequency depends on turnover and the filing scheme your business uses.';
     }
   }
-  // STARTUP MODE
+
+  // STARTUP
   if (mode === 'Startup') {
     if (msg.includes('mca')) {
       return 'Most companies in India are incorporated through MCA filings with required compliance documents.';
@@ -34,5 +52,25 @@ function generateResponse(message = '', mode = '') {
       return 'DPIIT startup recognition can help with tax and compliance benefits for eligible startups.';
     }
   }
-  return 'Please ask a specific finance question (for example: PPF, SIP, ITR, 80C, GST, or startup registration).';
+
+  return 'Please ask a specific finance question.';
 }
+
+app.post('/api/chat', (req, res) => {
+  const message = req.body?.message?.trim();
+  const mode = req.body?.mode;
+
+  if (!message) {
+    return res.json({ reply: 'Please enter a message.' });
+  }
+
+  if (isBlocked(message)) {
+    return res.json({ reply: 'Blocked due to safety policy.' });
+  }
+
+  res.json({ reply: generateResponse(message, mode) });
+});
+
+app.listen(PORT, () => {
+  console.log(`Running on http://localhost:${PORT}`);
+});
